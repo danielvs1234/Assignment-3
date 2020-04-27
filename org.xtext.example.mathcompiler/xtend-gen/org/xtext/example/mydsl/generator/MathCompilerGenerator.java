@@ -4,7 +4,6 @@
 package org.xtext.example.mydsl.generator;
 
 import com.google.common.collect.Iterators;
-import javax.swing.JOptionPane;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -34,26 +33,7 @@ public class MathCompilerGenerator extends AbstractGenerator {
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     final MathExp math = Iterators.<MathExp>filter(resource.getAllContents(), MathExp.class).next();
-    final int result = this.compute(math);
     this.printClass(math, fsa);
-    String _display = this.display(math);
-    String _plus = ("Math expression = " + _display);
-    System.out.println(_plus);
-    JOptionPane.showMessageDialog(null, ("result = " + Integer.valueOf(result)), "Math Language", JOptionPane.INFORMATION_MESSAGE);
-  }
-  
-  public int compute(final MathExp math) {
-    EList<AbstractExpression> _abstractExpression = math.getAbstractExpression();
-    for (final Object e : _abstractExpression) {
-      int _size = math.getAbstractExpression().size();
-      String _plus = ("" + Integer.valueOf(_size));
-      System.out.println(_plus);
-    }
-    return 1;
-  }
-  
-  public String display(final MathExp math) {
-    return null;
   }
   
   public String displayExp(final Expression exp) {
@@ -290,15 +270,8 @@ public class MathCompilerGenerator extends AbstractGenerator {
     return _switchResult;
   }
   
-  public String[] splitString(final String expressionString, final String split) {
-    return expressionString.split(split);
-  }
-  
   public void printClass(final MathExp math, final IFileSystemAccess2 fsa) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("package org.xtext.example.mydsl.generator");
-    _builder.newLine();
-    _builder.newLine();
     _builder.append("public class MathCompiler{");
     _builder.newLine();
     _builder.append("\t");
@@ -386,6 +359,6 @@ public class MathCompilerGenerator extends AbstractGenerator {
     _builder.append("}");
     _builder.newLine();
     String javaClass = _builder.toString();
-    fsa.generateFile("MathCompilerTest123.java", javaClass);
+    fsa.generateFile("MathCompiler.java", javaClass);
   }
 }

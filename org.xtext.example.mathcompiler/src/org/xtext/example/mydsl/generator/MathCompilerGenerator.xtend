@@ -33,26 +33,9 @@ class MathCompilerGenerator extends AbstractGenerator {
 		
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val math = resource.allContents.filter(MathExp).next
-		val result = math.compute
 		printClass(math, fsa)
-		System.out.println("Math expression = "+math.display)
-		JOptionPane.showMessageDialog(null, "result = "+result,"Math Language", JOptionPane.INFORMATION_MESSAGE)
-		
 	}
 	
-	
-	def int compute(MathExp math) { 
-		for(Object e : math.abstractExpression)
-		System.out.println("" + math.abstractExpression.size())
-		return 1
-	}
-
-
-
-
-	def String display(MathExp math) { 
-		//math.exp.displayExp
-	}
 	
 	def String displayExp(Expression exp) {
 		switch exp {
@@ -98,15 +81,10 @@ class MathCompilerGenerator extends AbstractGenerator {
 		}
 	}
 	
-	def String[] splitString(String expressionString, String split){
-		return expressionString.split(split)
-	}
 	
 	def printClass(MathExp math, IFileSystemAccess2 fsa){
 		
 		var javaClass = '''
-		package org.xtext.example.mydsl.generator
-		
 		public class MathCompiler{
 			public MathCompiler(){
 				}
@@ -132,7 +110,7 @@ class MathCompilerGenerator extends AbstractGenerator {
 		}
 		'''
 		
-		fsa.generateFile("MathCompilerTest123.java", javaClass)
+		fsa.generateFile("MathCompiler.java", javaClass)
 	}
 		
 }
